@@ -1,21 +1,20 @@
 <?php
-// заменить на connect.php
-require 'connectPrivate.php';
-
 $url = $_SERVER['REQUEST_URI'];
-preg_match('#/page/([a-z0-9_-]+)#', $url, $match);
-$slug = $match[1];
 
+if (preg_match('#^/page/([a-z0-9_-]+)$#', $url, $params)) {
+    $page = include 'view/page/show.php';
+}
 
-$query = "SELECT * FROM pages WHERE slug='$slug'";
-$res = mysqli_query($link, $query) or die(mysqli_error($link));
-$page   = mysqli_fetch_assoc($res);
+if (preg_match('#^/page/all$#', $url, $params)) {
+    $page = include 'view/page/all.php';
+}
 
 $layout = file_get_contents('layout.php');
 $layout = str_replace('{{ title }}', $page['title'], $layout);
 $layout = str_replace('{{ content }}', $page['content'], $layout);
 
 echo $layout;
+
 
 $path = 'view' . $url . '.php';
 
