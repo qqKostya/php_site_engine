@@ -3,7 +3,7 @@
 require 'connectPrivate.php';
 
 $url = $_SERVER['REQUEST_URI'];
-preg_match('#/page(\d+)#', $url, $match);
+preg_match('#/page/(\d+)#', $url, $match);
 $id = (int) $match[1];
 
 
