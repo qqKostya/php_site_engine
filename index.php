@@ -1,16 +1,20 @@
 <?php
+// заменить на connect.php
+require 'connectPrivate.php';
+
 $url = $_SERVER['REQUEST_URI'];
-
-$layout  = file_get_contents('layout.php');
-$content = file_get_contents('view' . $url . '.php');
-
-preg_match('#{{ title: "(.+?)" }}#', $content, $match);
-$title = $match[1];
-$content = preg_replace('#{{ title: "(.+?)" }}#', '', $content);
+preg_match('#/page(\d+)#', $url, $match);
+$id = (int) $match[1];
 
 
-$layout = str_replace('{{ title }}', $title, $layout);
-$layout = str_replace('{{ content }}', $content, $layout);
+$query  = "SELECT * FROM pages WHERE id=$id";
+$res = mysqli_query($link, $query) or die(mysqli_error($link));
+$page   = mysqli_fetch_assoc($res);
+
+$layout = file_get_contents('layout.php');
+$layout = str_replace('{{ title }}', $page['title'], $layout);
+$layout = str_replace('{{ content }}', $page['content'], $layout);
+
 echo $layout;
 
 $path = 'view' . $url . '.php';
