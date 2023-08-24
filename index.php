@@ -1,7 +1,9 @@
 <?php
+require_once __DIR__ . '/connectPrivate.php';
+
 $url = $_SERVER['REQUEST_URI'];
 
-if (preg_match('#^/page/([a-z0-9_-]+)$#', $url, $params)) {
+if (preg_match('#^/page/(?<slug>[a-z0-9_-]+)$#', $url, $params)) {
     $page = include 'view/page/show.php';
 }
 

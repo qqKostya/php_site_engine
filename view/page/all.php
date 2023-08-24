@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '../../../connectPrivate.php';
 
 $query = "SELECT slug, title FROM pages";
 $res = mysqli_query($link, $query) or die(mysqli_error($link));
