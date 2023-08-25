@@ -3,11 +3,18 @@ require_once __DIR__ . '/connectPrivate.php';
 
 $url = $_SERVER['REQUEST_URI'];
 
-if (preg_match('#^/page/(?<slug>[a-z0-9_-]+)$#', $url, $params)) {
+$route = '^/page/(?<catSlug>[a-z0-9_-]+)/(?<pageSlug>[a-z0-9_-]+)$';
+if (preg_match("#$route#", $url, $params)) {
     $page = include 'view/page/show.php';
 }
 
-if (preg_match('#^/page/all$#', $url, $params)) {
+$route = '^/page/(?<catSlug>[a-z0-9_-]+)$';
+if (preg_match("#$route#", $url, $params)) {
+    $page = include 'view/page/category.php';
+}
+
+$route = '^/$';
+if (preg_match("#$route#", $url, $params)) {
     $page = include 'view/page/all.php';
 }
 
